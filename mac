@@ -53,6 +53,7 @@ case "$SHELL" in
     ;;
 esac
 
+# todo make a version of this f(x) for brew cask...
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -137,10 +138,10 @@ brew_install_or_upgrade 'mysql'
 brew_launchctl_restart 'mysql'
 brew_install_or_upgrade 'python'
 brew_install_or_upgrade 'ansible'
-#brew_install_or_upgrade 'postgres'
-#brew_launchctl_restart 'postgresql'
-#brew_install_or_upgrade 'redis'
-#brew_launchctl_restart 'redis'
+brew_install_or_upgrade 'postgres'
+brew_launchctl_restart 'postgresql'
+brew_install_or_upgrade 'redis'
+brew_launchctl_restart 'redis'
 #brew_install_or_upgrade 'the_silver_searcher'
 brew_install_or_upgrade 'vim'
 #brew_install_or_upgrade 'ctags'
@@ -148,14 +149,22 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 #brew_install_or_upgrade 'imagemagick'
 #brew_install_or_upgrade 'qt'
-#brew_install_or_upgrade 'hub'
+brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'mas'
+brew_install_or_upgrade 'wget'
+brew_install_or_upgrade 'gpg2'
 
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
+# install rvm
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+\curl -sSL https://get.rvm.io | bash -s stable --rails --ruby
+
+# todo add rvm install script...
+#brew_install_or_upgrade 'rbenv'
+#brew_install_or_upgrade 'ruby-build'
 
 # shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
+#append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
 
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
@@ -163,14 +172,14 @@ brew_install_or_upgrade 'libyaml'
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
-eval "$(rbenv init - zsh)"
+# #eval "$(rbenv init - zsh)"
 
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
-fi
+# if ! rbenv versions | grep -Fq "$ruby_version"; then
+#   rbenv install -s "$ruby_version"
+# fi
 
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
+# rbenv global "$ruby_version"
+# rbenv shell "$ruby_version"
 
 gem update --system
 
@@ -180,12 +189,34 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-#brew_install_or_upgrade 'heroku-toolbelt'
+brew_install_or_upgrade 'heroku-toolbelt'
 
 #if ! command -v rcup >/dev/null; then
 #  brew_tap 'thoughtbot/formulae'
 #  brew_install_or_upgrade 'rcm'
 #fi
+
+brew cask install --appdir="/Applications" spotify
+brew cask install --appdir="/Applications" rubymine
+brew cask install --appdir="/Applications" virtualbox
+brew cask install --appdir="/Applications" vagrant
+brew cask install --appdir="~/Applications" iterm2
+
+# use mas to install programs from app-store
+# TODO need to figure out AppStore program ideas
+# just running `mas lucky Xcode` seems like a bad idea
+# Xcode
+# flycut
+# spectacle
+# amplify for spotify
+# spark
+# anti-sleep
+# slack
+
+# use scm_breeze
+git clone git://github.com/scmbreeze/scm_breeze.git ~/.scm_breeze
+~/.scm_breeze/install.sh
+source ~/.zshrc
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
