@@ -14,6 +14,7 @@ We support:
 
 * [OS X Mavericks (10.9)](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
 * [OS X Yosemite (10.10)](https://www.apple.com/osx/)
+* [OS X Mojave (10.14)](https://www.apple.com/osx/) ?? Maybe...
 
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
@@ -24,7 +25,7 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/flynfish/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/bradley2w1dl/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
