@@ -189,17 +189,17 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-brew_install_or_upgrade 'heroku-toolbelt'
+#brew_install_or_upgrade 'heroku-toolbelt'
 
 #if ! command -v rcup >/dev/null; then
 #  brew_tap 'thoughtbot/formulae'
 #  brew_install_or_upgrade 'rcm'
 #fi
 
-brew cask install --appdir="/Applications" spotify
-brew cask install --appdir="/Applications" rubymine
-brew cask install --appdir="/Applications" virtualbox
-brew cask install --appdir="/Applications" vagrant
+brew cask install --appdir="~/Applications" spotify
+brew cask install --appdir="~/Applications" rubymine
+brew cask install --appdir="~/Applications" virtualbox
+brew cask install --appdir="~/Applications" vagrant
 brew cask install --appdir="~/Applications" iterm2
 
 # use mas to install programs from app-store
